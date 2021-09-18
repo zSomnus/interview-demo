@@ -13,7 +13,7 @@ import {
 import {
   EditTwoTone,
   CopyTwoTone,
-  DeleteFilled,
+  DeleteTwoTone,
   SettingOutlined,
   FormatPainterOutlined,
 } from '@ant-design/icons';
@@ -35,7 +35,7 @@ const CardTitle = (showDrawer) => {
             onClick={showDrawer}
           ></Button>
           <Button type="link" icon={<CopyTwoTone />}></Button>
-          <Button type="link" disabled icon={<DeleteFilled />}></Button>
+          <Button type="link" disabled icon={<DeleteTwoTone />}></Button>
         </Col>
       </Row>
     </div>
