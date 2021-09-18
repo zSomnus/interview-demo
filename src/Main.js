@@ -22,10 +22,13 @@ const { TabPane } = Tabs;
 
 const CardTitle = (showDrawer) => {
   return (
-    <div className="card-title">
-      <Row>
-        <Col flex={23}>
+    <div className="card-title" style={{ display: 'flex' }}>
+      <Row wrap={false} align="middle">
+        <Col flex={2}>
           <h1>Custom Title</h1>
+        </Col>
+        <Col flex={20}></Col>
+        <Col style={{ textAlign: 'right' }} flex={2}>
           <Button
             type="link"
             icon={<EditTwoTone />}

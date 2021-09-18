@@ -24,3 +24,8 @@
 .ant-tabs-tab-active {
   justify-content: center;
 }
+
+.card-title {
+  display: contents;
+  flex-direction: column;
+}
