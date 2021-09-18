@@ -124,6 +124,22 @@ const CreateDrawer = (onClose, visible) => {
   );
 };
 
+const CardRow = (showDrawer) => {
+  return (
+    <Row justify="center">
+      <Col span={20}>
+        <Card className="cards" bodyStyle={{ paddingTop: 0, paddingBottom: 0 }}>
+          {CardTitle(showDrawer)}
+          <Divider style={{ margin: 0 }} />
+          <p>Custom body text</p>
+        </Card>
+      </Col>
+    </Row>
+  );
+};
+
+const Duplicate = () => {};
+
 const Main = () => {
   const [visible, setVisible] = useState(false);
 
@@ -137,15 +153,7 @@ const Main = () => {
 
   return (
     <div>
-      <Row justify="center">
-        <Col span={20}>
-          <Card className="cards">
-            {CardTitle(showDrawer)}
-            <Divider />
-            <p>Custom body text</p>
-          </Card>
-        </Col>
-      </Row>
+      {CardRow(showDrawer)}
       {CreateDrawer(onClose, visible)}
     </div>
   );
