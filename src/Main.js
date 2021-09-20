@@ -4,9 +4,11 @@ import MyDrawer from './MyDrawer';
 
 const Main = () => {
   const [visible, setVisible] = useState(false);
+  let currentCardIndex = 0;
 
   const showDrawer = () => {
     setVisible(true);
+    console.log(`Current card index: ${currentCardIndex}`);
   };
 
   let cardContent = {
@@ -22,16 +24,28 @@ const Main = () => {
 
   const [cardMap, setCardMap] = useState([]);
 
+  const setCurrentIndex = () => {
+    console.log('index');
+  };
+
   const updateCards = () => {
     let index = 0;
     console.log(`card length: ${cards.length}`);
     let isDeletionDisabled = cards.length < 2;
     let newCardMap = cards.map(() => (
       <div key={index}>
-        {MyCard(index++, cards, showDrawer, updateCards, isDeletionDisabled)}
+        {MyCard(
+          index++,
+          setCurrentIndex,
+          cards,
+          showDrawer,
+          updateCards,
+          isDeletionDisabled
+        )}
       </div>
     ));
     setCardMap([...newCardMap]);
+    console.log(cards.length);
   };
 
   useEffect(() => {

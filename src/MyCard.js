@@ -10,7 +10,7 @@ import {
 const CardTitle = (
   titleText,
   titleColor,
-  showDrawer,
+  editCard,
   duplicateCard,
   deleteCard,
   isDeletionIconDisabled
@@ -26,7 +26,7 @@ const CardTitle = (
           <Button
             type="link"
             icon={<EditTwoTone />}
-            onClick={showDrawer}
+            onClick={editCard}
           ></Button>
           <Button
             type="link"
@@ -47,6 +47,7 @@ const CardTitle = (
 
 const MyCard = (
   index,
+  currentCardIndex,
   cards,
   showDrawer,
   updateCards,
@@ -63,6 +64,11 @@ const MyCard = (
     cards.splice(index, 1);
     updateCards();
     console.log(`Rrmove from index: ${index}`);
+  };
+
+  const editCard = () => {
+    currentCardIndex();
+    showDrawer();
   };
 
   return (
@@ -82,14 +88,13 @@ const MyCard = (
           {CardTitle(
             cards[index].title,
             cards[index].titleColor,
-            showDrawer,
+            editCard,
             duplicateCard,
             deleteCard,
             isDeletionIconDisabled
           )}
           <Divider style={{ margin: 0 }} />
           <p style={{ color: cards[index].bodyColor }}>{cards[index].body}</p>
-          {`${isDeletionIconDisabled}`}
         </Card>
       </Col>
     </Row>
