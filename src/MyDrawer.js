@@ -5,6 +5,8 @@ import ColorBlock from './ColorBlock';
 
 const { TabPane } = Tabs;
 
+let myTitleColor;
+
 const SettingTab = () => {
   return (
     <Form
@@ -30,14 +32,17 @@ const SettingTab = () => {
   );
 };
 
-const StyleTab = () => {
-  const [titleColor, setTitleColor] = useState('black');
+const StyleTab = (updateCard) => {
+  const [titleColor, setTitleColor] = useState('yellow');
   const [bodyColor, setBodyColor] = useState('black');
   const [panelColor, setPanelColor] = useState('black');
 
   const onTitleColorChange = (e) => {
     console.log('onChange', e, e.hex);
+    myTitleColor = e.hex;
+    console.log(`Change title color ${myTitleColor}`);
     setTitleColor(e.hex);
+    updateCard(e.hex);
   };
 
   const onBodyColorChange = (e) => {
@@ -99,20 +104,27 @@ const StyleTab = () => {
   );
 };
 
-const DrawerTabs = () => {
+const DrawerTabs = (updateCard) => {
   return (
     <Tabs defaultActiveKey="1" centered tabBarGutter={0}>
       <TabPane tab={<SettingOutlined style={{ fontSize: 20 }} />} key="1">
-        {SettingTab()}
+        {SettingTab(updateCard)}
       </TabPane>
       <TabPane tab={<FormatPainterOutlined style={{ fontSize: 20 }} />} key="2">
-        {StyleTab()}
+        {StyleTab(updateCard)}
       </TabPane>
     </Tabs>
   );
 };
 
-const MyDrawer = (onClose, visible) => {
+const MyDrawer = (currentIndex, cards, onClose, visible, updateCards) => {
+  console.log(`In Dreawer`);
+  console.log([...cards]);
+  const updateCard = (titleColor) => {
+    console.log(`Current Index: ${currentIndex}`);
+    cards[currentIndex].titleColor = titleColor;
+    updateCards();
+  };
   return (
     <Drawer
       className="drawer"
@@ -126,7 +138,7 @@ const MyDrawer = (onClose, visible) => {
       visible={visible}
       closable={false}
     >
-      {DrawerTabs()}
+      {DrawerTabs(updateCard)}
     </Drawer>
   );
 };

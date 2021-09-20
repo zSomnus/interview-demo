@@ -4,11 +4,11 @@ import MyDrawer from './MyDrawer';
 
 const Main = () => {
   const [visible, setVisible] = useState(false);
-  let currentCardIndex = 0;
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const showDrawer = () => {
+    console.log(`Current Index: ${currentCardIndex}`);
     setVisible(true);
-    console.log(`Current card index: ${currentCardIndex}`);
   };
 
   let cardContent = {
@@ -20,17 +20,16 @@ const Main = () => {
     panelRadius: 10,
   };
 
-  let cards = [];
-
+  const [cards, setCards] = useState([cardContent]);
   const [cardMap, setCardMap] = useState([]);
 
-  const setCurrentIndex = () => {
-    console.log('index');
+  const setCurrentIndex = (index) => {
+    setCurrentCardIndex(index);
   };
-
   const updateCards = () => {
+    console.log(`From Main`);
+    console.log([...cards]);
     let index = 0;
-    console.log(`card length: ${cards.length}`);
     let isDeletionDisabled = cards.length < 2;
     let newCardMap = cards.map(() => (
       <div key={index}>
@@ -45,11 +44,9 @@ const Main = () => {
       </div>
     ));
     setCardMap([...newCardMap]);
-    console.log(cards.length);
   };
 
   useEffect(() => {
-    cards.push(cardContent);
     updateCards();
   }, []);
 
@@ -60,7 +57,7 @@ const Main = () => {
   return (
     <div>
       {cardMap}
-      {MyDrawer(onClose, visible)}
+      {MyDrawer(currentCardIndex, cards, onClose, visible, updateCards)}
     </div>
   );
 };

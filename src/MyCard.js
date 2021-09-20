@@ -47,16 +47,17 @@ const CardTitle = (
 
 const MyCard = (
   index,
-  currentCardIndex,
+  setCurrentIndex,
   cards,
   showDrawer,
   updateCards,
   isDeletionIconDisabled
 ) => {
+  console.log(`Card index: ${index}`);
+
   const duplicateCard = () => {
     cards.splice(index, 0, cards[index]);
     updateCards();
-    console.log(cards);
     console.log(`Duplicate from index: ${index}`);
   };
 
@@ -67,7 +68,7 @@ const MyCard = (
   };
 
   const editCard = () => {
-    currentCardIndex();
+    setCurrentIndex(index);
     showDrawer();
   };
 
