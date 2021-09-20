@@ -8,8 +8,7 @@ import {
 } from '@ant-design/icons';
 
 const CardTitle = (
-  titleText,
-  titleColor,
+  card,
   editCard,
   duplicateCard,
   deleteCard,
@@ -19,7 +18,9 @@ const CardTitle = (
     <div className="card-title" style={{ display: 'flex' }}>
       <Row wrap={false} align="middle">
         <Col flex={2}>
-          <h1 style={{ color: titleColor }}>{titleText}</h1>
+          <h1 style={{ color: card.titleColor, fontSize: card.titleSize }}>
+            {card.title}
+          </h1>
         </Col>
         <Col flex={20}></Col>
         <Col style={{ textAlign: 'right' }} flex={2}>
@@ -49,22 +50,22 @@ const MyCard = (
   index,
   setCurrentIndex,
   cards,
+  updateCardArray,
   showDrawer,
   updateCards,
   isDeletionIconDisabled
 ) => {
-  console.log(`Card index: ${index}`);
-
   const duplicateCard = () => {
-    cards.splice(index, 0, cards[index]);
+    let clone = JSON.parse(JSON.stringify(cards[index]));
+    cards.splice(index, 0, clone);
+    updateCardArray(cards);
     updateCards();
-    console.log(`Duplicate from index: ${index}`);
   };
 
   const deleteCard = () => {
     cards.splice(index, 1);
+    updateCardArray(cards);
     updateCards();
-    console.log(`Rrmove from index: ${index}`);
   };
 
   const editCard = () => {
@@ -87,15 +88,21 @@ const MyCard = (
           }}
         >
           {CardTitle(
-            cards[index].title,
-            cards[index].titleColor,
+            cards[index],
             editCard,
             duplicateCard,
             deleteCard,
             isDeletionIconDisabled
           )}
           <Divider style={{ margin: 0 }} />
-          <p style={{ color: cards[index].bodyColor }}>{cards[index].body}</p>
+          <p
+            style={{
+              color: cards[index].bodyColor,
+              fontSize: cards[index].bodySize,
+            }}
+          >
+            {cards[index].body}
+          </p>
         </Card>
       </Col>
     </Row>

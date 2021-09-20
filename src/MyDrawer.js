@@ -5,9 +5,17 @@ import ColorBlock from './ColorBlock';
 
 const { TabPane } = Tabs;
 
-let myTitleColor;
+const SettingTab = (card, updateCard) => {
+  const onTitleChange = (e) => {
+    card.title = e.target.value;
+    updateCard();
+  };
 
-const SettingTab = () => {
+  const onBodyChange = (e) => {
+    card.body = e.target.value;
+    updateCard();
+  };
+
   return (
     <Form
       layout="vertical"
@@ -19,40 +27,70 @@ const SettingTab = () => {
         label="Title Text"
         style={{ fontWeight: 'bold' }}
       >
-        <Input placeholder="Enter custom title" />
+        <Input placeholder="Enter custom title" onChange={onTitleChange} />
       </Form.Item>
       <Form.Item
         name="bodyText"
         label="Body Text"
         style={{ fontWeight: 'bold' }}
       >
-        <Input.TextArea rows={4} placeholder="Enter custom text" />
+        <Input.TextArea
+          rows={4}
+          placeholder="Enter custom text"
+          onChange={onBodyChange}
+        />
       </Form.Item>
     </Form>
   );
 };
 
-const StyleTab = (updateCard) => {
+const StyleTab = (card, updateCard) => {
   const [titleColor, setTitleColor] = useState('yellow');
   const [bodyColor, setBodyColor] = useState('black');
   const [panelColor, setPanelColor] = useState('black');
 
   const onTitleColorChange = (e) => {
     console.log('onChange', e, e.hex);
-    myTitleColor = e.hex;
-    console.log(`Change title color ${myTitleColor}`);
     setTitleColor(e.hex);
-    updateCard(e.hex);
+    card.titleColor = e.hex;
+    updateCard();
+  };
+
+  const onTitleSizeChange = (e) => {
+    if (e.key === 'Enter') {
+      card.titleSize = e.target.value;
+      console.log(`update card`);
+      updateCard();
+    }
   };
 
   const onBodyColorChange = (e) => {
     console.log('onChange', e, e.hex);
     setBodyColor(e.hex);
+    card.bodyColor = e.hex;
+    updateCard();
+  };
+
+  const onBodySizeChange = (e) => {
+    if (e.key === 'Enter') {
+      card.bodySize = e.target.value;
+      updateCard();
+    }
+  };
+
+  const onPanelRadiusChange = (e) => {
+    if (e.key === 'Enter') {
+      console.log('radius change');
+      card.panelRadius = parseInt(e.target.value);
+      updateCard();
+    }
   };
 
   const onPanelColorChange = (e) => {
     console.log('onChange', e, e.hex);
     setPanelColor(e.hex);
+    card.panelColor = e.hex;
+    updateCard();
   };
 
   return (
@@ -63,7 +101,7 @@ const StyleTab = (updateCard) => {
       <Row>
         <Col span={12}>
           <h3>Size</h3>
-          <Input style={{ width: '80%' }} />
+          <Input style={{ width: '80%' }} onKeyPress={onTitleSizeChange} />
         </Col>
         <Col span={12} style={{ zIndex: 1002 }}>
           <h3>Color</h3>
@@ -78,7 +116,7 @@ const StyleTab = (updateCard) => {
       <Row>
         <Col span={12}>
           <h3>Size</h3>
-          <Input style={{ width: '80%' }} />
+          <Input style={{ width: '80%' }} onKeyPress={onBodySizeChange} />
         </Col>
         <Col span={12} style={{ zIndex: 1001 }}>
           <h3>Color</h3>
@@ -93,7 +131,7 @@ const StyleTab = (updateCard) => {
       <Row style={{ height: 1000 }}>
         <Col span={12}>
           <h3>Corner Radius</h3>
-          <Input style={{ width: '80%' }} />
+          <Input style={{ width: '80%' }} onKeyPress={onPanelRadiusChange} />
         </Col>
         <Col span={12} style={{ zIndex: 1000 }}>
           <h3>Color</h3>
@@ -104,25 +142,24 @@ const StyleTab = (updateCard) => {
   );
 };
 
-const DrawerTabs = (updateCard) => {
+const DrawerTabs = (card, updateCard) => {
   return (
     <Tabs defaultActiveKey="1" centered tabBarGutter={0}>
       <TabPane tab={<SettingOutlined style={{ fontSize: 20 }} />} key="1">
-        {SettingTab(updateCard)}
+        {SettingTab(card, updateCard)}
       </TabPane>
       <TabPane tab={<FormatPainterOutlined style={{ fontSize: 20 }} />} key="2">
-        {StyleTab(updateCard)}
+        {StyleTab(card, updateCard)}
       </TabPane>
     </Tabs>
   );
 };
 
 const MyDrawer = (currentIndex, cards, onClose, visible, updateCards) => {
-  console.log(`In Dreawer`);
-  console.log([...cards]);
-  const updateCard = (titleColor) => {
-    console.log(`Current Index: ${currentIndex}`);
-    cards[currentIndex].titleColor = titleColor;
+  let tempCard = { ...cards[currentIndex] };
+  const updateCard = () => {
+    cards[currentIndex] = tempCard;
+    console.log(cards[currentIndex]);
     updateCards();
   };
   return (
@@ -138,7 +175,7 @@ const MyDrawer = (currentIndex, cards, onClose, visible, updateCards) => {
       visible={visible}
       closable={false}
     >
-      {DrawerTabs(updateCard)}
+      {DrawerTabs(tempCard, updateCard)}
     </Drawer>
   );
 };

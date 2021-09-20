@@ -7,13 +7,14 @@ const Main = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const showDrawer = () => {
-    console.log(`Current Index: ${currentCardIndex}`);
     setVisible(true);
   };
 
   let cardContent = {
     title: 'Custom Title',
+    titleSize: 28,
     body: 'Custom body content',
+    bodySize: 14,
     titleColor: '#000000',
     bodyColor: '#000000',
     panelColor: '#ffffff',
@@ -26,9 +27,10 @@ const Main = () => {
   const setCurrentIndex = (index) => {
     setCurrentCardIndex(index);
   };
+  const updateCardArray = (cards) => {
+    setCards(cards);
+  };
   const updateCards = () => {
-    console.log(`From Main`);
-    console.log([...cards]);
     let index = 0;
     let isDeletionDisabled = cards.length < 2;
     let newCardMap = cards.map(() => (
@@ -37,6 +39,7 @@ const Main = () => {
           index++,
           setCurrentIndex,
           cards,
+          updateCardArray,
           showDrawer,
           updateCards,
           isDeletionDisabled
