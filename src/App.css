@@ -41,3 +41,7 @@ p {
   display: contents;
   flex-direction: column;
 }
+
+.ant-input {
+  border-radius: 5px;
+}

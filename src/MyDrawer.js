@@ -27,7 +27,10 @@ const SettingTab = (card, updateCard) => {
         label="Title Text"
         style={{ fontWeight: 'bold' }}
       >
-        <Input placeholder="Enter custom title" onChange={onTitleChange} />
+        <Input
+          placeholder="Enter custom title"
+          onChange={onTitleChange}
+        />
       </Form.Item>
       <Form.Item
         name="bodyText"
@@ -45,9 +48,9 @@ const SettingTab = (card, updateCard) => {
 };
 
 const StyleTab = (card, updateCard) => {
-  const [titleColor, setTitleColor] = useState('yellow');
-  const [bodyColor, setBodyColor] = useState('black');
-  const [panelColor, setPanelColor] = useState('black');
+  const [titleColor, setTitleColor] = useState(card.titleColor);
+  const [bodyColor, setBodyColor] = useState(card.bodyColor);
+  const [panelColor, setPanelColor] = useState(card.panelColor);
 
   const onTitleColorChange = (e) => {
     console.log('onChange', e, e.hex);
@@ -101,7 +104,10 @@ const StyleTab = (card, updateCard) => {
       <Row>
         <Col span={12}>
           <h3>Size</h3>
-          <Input style={{ width: '80%' }} onKeyPress={onTitleSizeChange} />
+          <Input
+            style={{ width: '80%' }}
+            onKeyPress={onTitleSizeChange}
+          />
         </Col>
         <Col span={12} style={{ zIndex: 1002 }}>
           <h3>Color</h3>
@@ -116,7 +122,10 @@ const StyleTab = (card, updateCard) => {
       <Row>
         <Col span={12}>
           <h3>Size</h3>
-          <Input style={{ width: '80%' }} onKeyPress={onBodySizeChange} />
+          <Input
+            style={{ width: '80%' }}
+            onKeyPress={onBodySizeChange}
+          />
         </Col>
         <Col span={12} style={{ zIndex: 1001 }}>
           <h3>Color</h3>
@@ -131,7 +140,10 @@ const StyleTab = (card, updateCard) => {
       <Row style={{ height: 1000 }}>
         <Col span={12}>
           <h3>Corner Radius</h3>
-          <Input style={{ width: '80%' }} onKeyPress={onPanelRadiusChange} />
+          <Input
+            style={{ width: '80%' }}
+            onKeyPress={onPanelRadiusChange}
+          />
         </Col>
         <Col span={12} style={{ zIndex: 1000 }}>
           <h3>Color</h3>
@@ -162,6 +174,7 @@ const MyDrawer = (currentIndex, cards, onClose, visible, updateCards) => {
     console.log(cards[currentIndex]);
     updateCards();
   };
+
   return (
     <Drawer
       className="drawer"

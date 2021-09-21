@@ -36,7 +36,11 @@ const CardTitle = (
           ></Button>
           <Button
             type="link"
-            icon={<DeleteTwoTone style={{ color: { getTwoToneColor } }} />}
+            icon={
+              <DeleteTwoTone
+                twoToneColor={isDeletionIconDisabled ? '#AAAAAA' : '#1890FF'}
+              />
+            }
             disabled={isDeletionIconDisabled}
             onClick={deleteCard}
           ></Button>
